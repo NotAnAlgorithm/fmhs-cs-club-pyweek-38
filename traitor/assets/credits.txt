@@ -1,0 +1,4 @@
+city_background - Alucard, https://creativecommons.org/licenses/by/3.0/, https://opengameart.org/content/city-background-repetitive-3 (modified)
+roads - hc, https://creativecommons.org/licenses/by/3.0/, https://opengameart.org/content/road-tile-textures (modified)
+night_sky - fridaruiz, https://creativecommons.org/licenses/by/4.0/, https://opengameart.org/content/pixel-night-city
+rain - Evert, https://creativecommons.org/licenses/by/3.0/, https://opengameart.org/content/lpc-rain-animation
