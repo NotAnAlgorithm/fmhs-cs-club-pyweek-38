@@ -1,0 +1,19 @@
+{
+    "dialogue": [
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(...phew, that was close.)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(I finally made it.)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "Through the power of not actually checking the length of the text, you can only have 160 characters per textbox, 80 per line!"
+        }
+    ]
+}

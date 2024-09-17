@@ -24,7 +24,7 @@ city_skyline.add_child(cs1)
 city_skyline.add_child(cs2)
 
 
-def cs_phys():
+def cs_upd():
     self = city_skyline
     for item in (self.children[0], self.children[1]):
         item.rect.x -= c(1)
@@ -32,7 +32,7 @@ def cs_phys():
             item.rect.x += item.rect.w * 2
 
 
-city_skyline.physics = cs_phys
+city_skyline.update = cs_upd
 
 title_screen.add_child(city_skyline)
 
@@ -56,7 +56,7 @@ r2.rect.x = r1.rect.x + r1.rect.w
 pavement.add_child(r2)
 
 
-def pave_phys():
+def pave_upd():
     self = pavement
     for item in (self.children[0], self.children[1]):
         item.rect.x -= c(4)
@@ -64,7 +64,7 @@ def pave_phys():
             item.rect.x += item.rect.w * 2
 
 
-pavement.physics = pave_phys
+pavement.update = pave_upd
 
 title_screen.add_child(pavement)
 
@@ -77,7 +77,7 @@ for i in range(len(rain.sprite_sheet)):
     )
 
 
-def rain_phys():
+def rain_upd():
     rain.frame += 1
     if rain.frame == 3:
         rain.index += 1
@@ -87,7 +87,7 @@ def rain_phys():
 
 
 rain.frame = 0
-rain.physics = rain_phys
+rain.update = rain_upd
 
 
 def rain_render():
@@ -95,12 +95,11 @@ def rain_render():
     for i in range(7):
         rain.rect.y = 0
         for i in range(4):
-            original()
+            Sprite.render(rain)
             rain.rect.y += rain.rect.h
         rain.rect.x += rain.rect.w
 
 
-original = rain.render
 rain.render = rain_render
 
 title_screen.add_child(rain)

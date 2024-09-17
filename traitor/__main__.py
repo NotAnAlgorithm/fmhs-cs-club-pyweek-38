@@ -15,8 +15,8 @@ def draw_sprites(scene: Scene):
         scene.render()
 
 
-def call_physics(scene: Scene):
-    scene.physics()
+def call_update(scene: Scene):
+    scene.update()
 
 
 class Input:
@@ -29,21 +29,36 @@ class Input:
 
 # Main loop
 def main():
-    current_scene = title_screen  # ???
+    current_scene = None
+
+    thread = threading.Thread(target=game_logic, args=(), daemon=True)
+    thread.start()
 
     while True:
         screen.fill((255, 255, 255))  # Clear
 
-        # Render
-        loop_eternally(current_scene, draw_sprites)
+        if update_event.isSet():
+            update_event.clear()
+            try: # Grab updated scene from logic thread
+                scene = q.get()
+                if isinstance(scene, Scene):
+                    current_scene = scene
+            except:
+                pass
 
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            loop_eternally(current_scene, Input(event).handle_inputs)
+        if current_scene is not None:
+            # Render
+            loop_eternally(current_scene, draw_sprites)
 
-        loop_eternally(current_scene, call_physics)
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                loop_eternally(current_scene, Input(event).handle_inputs)
+
+            loop_eternally(current_scene, call_update)
+        else:
+            print("Game could be freezing. I don't know")
 
         pygame.display.update()
         fps_timer.tick(60)  # 60 fps cap

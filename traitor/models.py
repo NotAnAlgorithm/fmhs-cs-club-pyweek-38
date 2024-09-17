@@ -18,7 +18,12 @@ class Scene:
     def handle_input(self, input):
         pass  # To be overriden!!
 
-    def physics(self):
+    def update(self):
+        """
+        These are animation updates, not physics updates!
+        Please avoid doing a lot of math on these because
+        they *will* lag the game!
+        """
         pass  # To be overriden!!!
 
 
@@ -34,7 +39,7 @@ class Sprite(Scene):
 
     def fill_sprites(self, directory):
         for file in sorted(os.listdir(directory)):
-            if file.startswith("."):
+            if not (file.endswith(".png") or file.endswith(".jpg")):
                 continue
             self.sprite_sheet.append(
                 pygame.image.load(os.path.join(directory, file)).convert_alpha()
