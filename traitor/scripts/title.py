@@ -103,3 +103,38 @@ def rain_render():
 rain.render = rain_render
 
 title_screen.add_child(rain)
+
+new_game_box = Sprite()
+new_game_box.fill_sprites("traitor/assets/new_game/")
+new_game_box.resize(0, c(40))
+new_game_box.rect.x = center(WINDOW_SIZE[0], new_game_box.rect.w)
+new_game_box.rect.y = center(WINDOW_SIZE[1], new_game_box.rect.h, (2, 3))
+title_screen.add_child(new_game_box)
+
+title_logo = Sprite()
+title_logo.sprite_sheet.append(pix_font_xl.render("TRAITOR", True, (255, 153, 0)))
+title_logo.rects.append(None)
+title_logo.resize(0, WINDOW_SIZE[1] // 3)
+title_logo.rect.x = center(WINDOW_SIZE[0], title_logo.rect.w)
+title_logo.rect.y = center(WINDOW_SIZE[1], title_logo.rect.h, (1, 3))
+logo_shadow = Sprite()
+logo_shadow.sprite_sheet.append(pix_font_xl.render("TRAITOR", True, (0, 0, 0, 128)))
+logo_shadow.rects.append(None)
+logo_shadow.resize(0, WINDOW_SIZE[1] // 3)
+logo_shadow.rect.x = title_logo.rect.x
+logo_shadow.rect.y = title_logo.rect.y + c(10)
+
+title_screen.add_child(logo_shadow)
+title_screen.add_child(title_logo)
+
+
+# Handle menu options
+def title_next(event):
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        pos = pygame.mouse.get_pos()
+        # Check if player clicked on the new game box
+        if new_game_box.rect.collidepoint(pos):
+            title_screen.ret_val = 0
+
+
+title_screen.handle_input = title_next

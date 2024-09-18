@@ -21,6 +21,9 @@ def resize(image, scale):
     )
 
 
+pix_font_xl = pygame.font.Font(
+    "traitor/assets/fonts/sh-pinscher/SHPinscher-Regular.otf", WINDOW_SIZE[1] // 3
+)
 pix_font_lg = pygame.font.Font(
     "traitor/assets/fonts/sh-pinscher/SHPinscher-Regular.otf", int(c(30))
 )

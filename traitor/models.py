@@ -9,6 +9,7 @@ class Scene:
         self.guid = uuid4()
         self.parent = None
         self.children = []
+        self.ret_val = -1  # Used for communicating to game logic thread
 
     def add_child(self, child):
         assert isinstance(child, Scene)

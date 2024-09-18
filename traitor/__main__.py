@@ -35,11 +35,11 @@ def main():
     thread.start()
 
     while True:
-        screen.fill((255, 255, 255))  # Clear
+        screen.fill((0, 0, 0))  # Clear
 
         if update_event.isSet():
             update_event.clear()
-            try: # Grab updated scene from logic thread
+            try:  # Grab updated scene from logic thread
                 scene = q.get()
                 if isinstance(scene, Scene):
                     current_scene = scene
