@@ -14,12 +14,12 @@ class Entity(Sprite):
         self.forces_y = [0] * 10
         # ... did I just make a freaking free-body diagram?
         self.acceleration = [0, 0]
-        self.max_velocity = c(5)
-        self.move_force = c(0.25)
+        self.max_velocity = 5
+        self.move_force = 0.25
         self.air_intensity = 1.5  # base of exponential function
 
         # constant forces
-        self.forces_y[0] = -c(0.1)
+        self.forces_y[0] = -0.1
 
         # map:
         # forces_x
@@ -40,7 +40,7 @@ class Entity(Sprite):
         if self.rect.y + self.rect.h >= WINDOW_SIZE[1]:
             self.velocity[1] = -self.velocity[1] / 2  # 2 is the bounce coefficient
             self.velocity[1] -= self.acceleration[1]
-            self.forces_y[2] = c(0.1)
+            self.forces_y[2] = 0.1
         else:
             self.forces_y[2] = 0
 
@@ -48,8 +48,8 @@ class Entity(Sprite):
         self.y_direction = 1 if self.velocity[1] > 0 else -1
         # Calculate air resistance if moving
         if self.velocity[1] != 0:  # Vertical
-            self.forces_y[1] = self.velocity[1] / abs(self.velocity[1]) * -c(0.01)
-            if abs(self.velocity[1]) < c(0.05):
+            self.forces_y[1] = self.velocity[1] / abs(self.velocity[1]) * -0.01
+            if abs(self.velocity[1]) < 0.05:
                 self.forces_y[1] = 0
                 self.velocity[1] = 0
         if self.velocity[0] != 0:  # Horizontal
@@ -58,9 +58,7 @@ class Entity(Sprite):
                 * self.move_force
                 * (self.air_intensity) ** (abs(self.velocity[0]) - self.max_velocity)
             )
-            if abs(self.velocity[0]) < c(
-                0.05
-            ):  # Too slow to matter. Just end it already.
+            if abs(self.velocity[0]) < 0.05:  # Too slow to matter. Just end it already.
                 if self.forces_x[0] == 0:
                     self.velocity[0] = 0
                     self.forces_x[0] = 0
@@ -100,7 +98,7 @@ class Player(Entity):
         super().__init__(sprite, *args)
 
         # internals
-        self.jump_force = -c(10)
+        self.jump_force = -10
 
     def handle_input(self, event):
         super().handle_input(event)
