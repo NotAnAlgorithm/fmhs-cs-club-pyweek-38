@@ -15,7 +15,7 @@ class Entity(Sprite):
         # ... did I just make a freaking free-body diagram?
         self.acceleration = [0, 0]
         self.max_velocity = c(5)
-        self.move_acceleration = c(0.25)
+        self.move_force = c(0.25)
         self.air_intensity = 1.5  # base of exponential function
 
         # constant forces
@@ -28,6 +28,7 @@ class Entity(Sprite):
         # forces_y
         # [0] gravity
         # [1] air resistance
+        # [2] normal force
 
     def update(self):
         super().update()
@@ -39,16 +40,22 @@ class Entity(Sprite):
         if self.rect.y + self.rect.h >= WINDOW_SIZE[1]:
             self.velocity[1] = -self.velocity[1] / 2  # 2 is the bounce coefficient
             self.velocity[1] -= self.acceleration[1]
+            self.forces_y[2] = c(0.1)
+        else:
+            self.forces_y[2] = 0
 
         self.x_direction = 1 if self.velocity[0] > 0 else -1
         self.y_direction = 1 if self.velocity[1] > 0 else -1
         # Calculate air resistance if moving
         if self.velocity[1] != 0:  # Vertical
             self.forces_y[1] = self.velocity[1] / abs(self.velocity[1]) * -c(0.01)
+            if abs(self.velocity[1]) < c(0.05):
+                self.forces_y[1] = 0
+                self.velocity[1] = 0
         if self.velocity[0] != 0:  # Horizontal
             self.forces_x[0] = (
                 -self.x_direction
-                * self.move_acceleration
+                * self.move_force
                 * (self.air_intensity) ** (abs(self.velocity[0]) - self.max_velocity)
             )
             if abs(self.velocity[0]) < c(
@@ -92,14 +99,23 @@ class Player(Entity):
     def __init__(self, sprite: str = "traitor/assets/entities/agent/", *args):
         super().__init__(sprite, *args)
 
+        # internals
+        self.jump_force = -c(10)
+
     def handle_input(self, event):
         super().handle_input(event)
 
+        if event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                # If normal force is nonzero
+                if self.forces_y[2] > 0:
+                    self.velocity[1] += self.jump_force
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
-            self.forces_x[1] = -self.move_acceleration
+            self.forces_x[1] = -self.move_force
         elif keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
-            self.forces_x[1] = self.move_acceleration
+            self.forces_x[1] = self.move_force
         else:
             self.forces_x[1] = 0
 
