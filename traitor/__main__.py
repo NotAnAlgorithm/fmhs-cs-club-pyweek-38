@@ -1,15 +1,6 @@
 from . import *
 
 
-def loop_eternally(parent: Scene, function: callable):
-    function(parent)
-    for scene in parent.children:
-        if len(scene.children) > 0:
-            loop_eternally(scene, function)
-        else:
-            function(scene)
-
-
 def draw_sprites(scene: Scene):
     if isinstance(scene, Sprite):
         scene.render()

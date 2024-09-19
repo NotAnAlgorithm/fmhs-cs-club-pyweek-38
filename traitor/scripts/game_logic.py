@@ -30,7 +30,7 @@ def game_logic():
         title_choice = wait_return()
         match title_choice:
             case 0:
-                internal_scene = Textbox(0)
+                internal_scene = World()
                 update_scene()
                 wait_return()
             case -1:

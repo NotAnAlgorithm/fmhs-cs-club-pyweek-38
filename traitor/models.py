@@ -16,7 +16,7 @@ class Scene:
         child.parent = self
         self.children.append(child)
 
-    def handle_input(self, input):
+    def handle_input(self, input: pygame.event):
         pass  # To be overriden!!
 
     def update(self):

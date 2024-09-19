@@ -130,11 +130,17 @@ title_screen.add_child(title_logo)
 
 # Handle menu options
 def title_next(event):
+    pos = pygame.mouse.get_pos()
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-        pos = pygame.mouse.get_pos()
         # Check if player clicked on the new game box
         if new_game_box.rect.collidepoint(pos):
+            set_cursor(0)
             title_screen.ret_val = 0
+    if event.type == pygame.MOUSEMOTION:
+        if new_game_box.rect.collidepoint(pos):
+            set_cursor(1)
+        else:
+            set_cursor(0)
 
 
 title_screen.handle_input = title_next

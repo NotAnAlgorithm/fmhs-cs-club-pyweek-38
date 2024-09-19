@@ -2,6 +2,11 @@ from . import *
 
 # Avoid using these outside of initial loading of a scene
 
+cursors = [
+    pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW),
+    pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND),
+]
+
 
 def c(
     num: int,
@@ -19,6 +24,27 @@ def resize(image, scale):
     return pygame.transform.scale(
         image, (image.get_width() / image.get_height() * scale, scale)
     )
+
+
+# These are fine.
+
+
+def loop_eternally(parent, function: callable):
+    function(parent)
+    for scene in parent.children:
+        if len(scene.children) > 0:
+            loop_eternally(scene, function)
+        else:
+            function(scene)
+
+
+def set_cursor(variant: int):
+    """
+    0 = arrow
+    1 = hand
+    this maintains my sanity rather than anything else
+    """
+    pygame.mouse.set_cursor(cursors[variant])
 
 
 pix_font_xl = pygame.font.Font(
