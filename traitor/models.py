@@ -10,6 +10,9 @@ class Scene:
         self.parent = None
         self.children = []
         self._ret_val = -1  # Used for communicating to game logic thread
+        # -1 - nothing
+        # 0 - standard next
+        # 1 - end textbox
 
     def add_child(self, child):
         assert isinstance(child, Scene)
@@ -49,6 +52,14 @@ class Scene:
             child.repeat_display()
         pass  # To be overriden!!!
 
+    def on_death(self):
+        """
+        When the Scene dies.
+        """
+        for child in self.children:
+            child.on_death()
+        pass  # To be overriden!!!
+
     # Return value decorator
     @property
     def ret_val(self):
@@ -83,6 +94,10 @@ class Sprite(Scene):
     def resize(self, index, scale):
         self.sprite_sheet[index] = resize(self.sprite_sheet[index], scale)
         self.rects[index] = self.sprite_sheet[index].get_rect()
+
+    def resize_all(self, scale):
+        for i in range(len(self.sprite_sheet)):
+            self.resize(i, scale)
 
     @property
     def location(self):

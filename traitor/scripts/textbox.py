@@ -86,7 +86,7 @@ class Textbox(Sprite):  # not really a sprite, but I need things to recognize it
             # Check if player clicked on the new game box
             if self.outer_box[1].collidepoint(pos):
                 set_cursor(0)
-                self.ret_val = 0
+                self.ret_val = 1  # 1 is next textbox
         if event.type == pygame.MOUSEMOTION:
             if self.outer_box[1].collidepoint(pos):
                 set_cursor(1)

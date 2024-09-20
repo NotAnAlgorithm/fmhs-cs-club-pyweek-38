@@ -145,12 +145,33 @@ def title_next(event):
 
 title_screen.handle_input = title_next
 
+rain_sfx = pygame.mixer.Sound("traitor/assets/sounds/rain.wav")
+rain_sfx.set_volume(1)
+
 
 def on_display():
-    pygame.mixer.Channel(0).play(pygame.mixer.Sound("traitor/assets/sounds/rain.wav"))
+    rain_sfx.play(-1)
     pygame.mixer.music.load("traitor/assets/sounds/opening_theme.wav")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
 
 title_screen.on_display = on_display
+
+
+def on_death():
+    pygame.mixer.music.fadeout(2000)
+    rain_sfx.fadeout(2000)
+
+
+title_screen.on_death = on_death
+
+door_sfx = pygame.mixer.Sound("traitor/assets/sounds/door_closing.wav")
+door_sfx.set_volume(1)
+
+
+def car_door_close():
+    door_sfx.play()
+
+
+title_screen.car_door_close = car_door_close

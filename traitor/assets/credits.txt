@@ -3,3 +3,4 @@ roads - hc, https://creativecommons.org/licenses/by/3.0/, https://opengameart.or
 night_sky - fridaruiz, https://creativecommons.org/licenses/by/4.0/, https://opengameart.org/content/pixel-night-city
 rain - Evert, https://creativecommons.org/licenses/by/3.0/, https://opengameart.org/content/lpc-rain-animation
 entities/agent - Public Domain, Adventure Series Character 'Agent' SMS
+jeep - TheMemeLord4, https://creativecommons.org/licenses/by/4.0/, https://opengameart.org/content/pixel-art-jeep

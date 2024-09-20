@@ -3,12 +3,12 @@
         {
             "name": "Traitor",
             "icon": "traitor.png",
-            "text": "(...phew, that was close.)"
+            "text": "(...phew. That was close.)"
         },
         {
             "name": "Traitor",
             "icon": "traitor.png",
-            "text": "(I finally made it.)"
+            "text": "(I've finally made it.)"
         },
         {
             "name": "Traitor",
@@ -18,12 +18,37 @@
         {
             "name": "Traitor",
             "icon": "traitor.png",
-            "text": "(I've infiltrated the belligerent foreign nation Dalmyr's capital city, Frostheim, without any suspicion.)"
+            "text": "(I've infiltrated the belligerent foreign nation Dalmyr's capital city Frostheim without any suspicion.)"
         },
         {
             "name": "Traitor",
             "icon": "traitor.png",
-            "text": "(.)"
+            "text": "(Later tonight, an advanced weapons system will be launched.)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(My objective was made clear by HQ.)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(I must enter undetected...)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(...access the weapon's control system...)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(...and stop the attack before it can even begin!)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(I'm approaching the target site right now.)"
         }
     ]
 }

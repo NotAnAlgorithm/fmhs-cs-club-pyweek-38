@@ -34,15 +34,15 @@ def main():
                 scene = q.get()
                 if isinstance(scene, Scene):
                     if current_scene is not None:
-                        before = current_scene.guid
+                        if current_scene.guid != scene.guid:
+                            current_scene.on_death()
+                            scene.on_display()
+                        else:
+                            current_scene.repeat_display()
                     else:
-                        before = None
+                        scene.on_display()
                     current_scene = scene
-                    after = current_scene.guid
-                    if before != after:
-                        current_scene.on_display()
-                    else:
-                        current_scene.repeat_display()
+
             except Exception as e:
                 print(e)
 

@@ -5,8 +5,7 @@ class Entity(Weak_Object):
     def __init__(self, sprite: str, x: int = 0, y: int = 0):
         super().__init__(x, y, create_surface=False)
         self.fill_sprites(sprite)
-        for i in range(len(self.sprite_sheet)):
-            self.resize(i, c(100))
+        self.resize_all(c(100))
 
         # internals
         self.velocity = [0, 0]

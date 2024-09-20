@@ -11,16 +11,18 @@ class Weak_Object(Sprite):
         w: int = 0,
         h: int = 0,
         *,
-        create_surface: bool = True
+        create_surface: bool = False,
+        collide: bool = True
     ):
         super().__init__()
 
         # internals
         self._x, self._y = x, y
-        self.rects.append(pygame.Rect(x, y, w, h))
         if create_surface:
+            self.rects.append(pygame.Rect(x, y, w, h))
             self.sprite_sheet.append(pygame.Surface((w, h)))
-            self.sprite.fill((255, 0, 0))
+            self.sprite.fill((128, 128, 0))
+        self.collide = collide
 
     def update(self):
         super().update()
@@ -30,14 +32,17 @@ class Weak_Object(Sprite):
 
     def check_collide(self):
         for each in self.parent.children:
-            if each.guid == self.guid:
-                continue
             if isinstance(each, Weak_Object):
+                if each.guid == self.guid or not each.collide:
+                    continue
                 if self.rect.colliderect(each.rect):
                     yield each
 
     @property
     def x(self):
+        """
+        When working with WINDOW_SIZE in object locations, you MUST unc(WINDOW_SIZE[i])
+        """
         return self._x
 
     @x.setter
@@ -47,6 +52,9 @@ class Weak_Object(Sprite):
 
     @property
     def y(self):
+        """
+        When working with WINDOW_SIZE in object locations, you MUST unc(WINDOW_SIZE[i])
+        """
         return self._y
 
     @y.setter

@@ -38,7 +38,7 @@ def title_logic():
     match title_choice:
         case 0:
             beginning_cutscene()
-            internal_scene = World()
+            playable_world()
             wait_return()
             # unknown...
             os._exit(0)
@@ -60,3 +60,30 @@ def beginning_cutscene():
     internal_scene.rm_child(-1)
     internal_scene.add_child(Textbox(3))
     wait_return()
+    internal_scene.rm_child(-1)
+    internal_scene.add_child(Textbox(4))
+    wait_return()
+    internal_scene.rm_child(-1)
+    internal_scene.add_child(Textbox(5))
+    wait_return()
+    internal_scene.rm_child(-1)
+    internal_scene.add_child(Textbox(6))
+    wait_return()
+    internal_scene.rm_child(-1)
+    internal_scene.add_child(Textbox(7))
+    wait_return()
+    internal_scene.rm_child(-1)
+    internal_scene.add_child(Textbox(8))
+    wait_return()
+    internal_scene.rm_child(-1)
+    internal_scene.add_child(Textbox(9))
+    wait_return()
+    internal_scene.car_door_close()
+
+
+def playable_world():
+    global internal_scene
+    ret_val = internal_scene.ret_val
+    while ret_val != 0:
+        internal_scene = Outside()
+        ret_val = wait_return()
