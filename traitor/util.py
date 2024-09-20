@@ -13,8 +13,10 @@ def c(
 ):  # Constant. Helps make constants from the scale size 50, which I use to test with.
     return num * (scale / 50)
 
+
 def unc(num: int):  # Unconstant. Haha
     return num * (50 / scale)
+
 
 def center(
     outer, inner, position=(1, 2)

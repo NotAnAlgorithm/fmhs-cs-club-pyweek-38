@@ -1,10 +1,12 @@
 from .. import *
 
+
 class Entity(Weak_Object):
     def __init__(self, sprite: str, x: int = 0, y: int = 0):
         super().__init__(x, y, create_surface=False)
         self.fill_sprites(sprite)
-        self.resize(0, c(100))
+        for i in range(len(self.sprite_sheet)):
+            self.resize(i, c(100))
 
         # internals
         self.velocity = [0, 0]
@@ -14,9 +16,39 @@ class Entity(Weak_Object):
         self.termv = 3
         self.grounded = False
 
+        # animation internals
+        self.past_move = self.movement  # mirror, frame behind
+        self.anim_dir = 0  # based on self.movement
+        # 0 - still right
+        # 1 - still left
+        # 2 - walk right
+        # 3 - walk left
+        self.frame = 0
+
     def update(self):
         super().update()
         self.physics()
+
+        # animation
+        # pick directions
+        if self.movement != self.past_move:
+            self.frame = 0
+            if self.movement == 0:
+                if self.past_move > 0:
+                    self.anim_dir = 0
+                else:
+                    self.anim_dir = 1
+            elif self.movement > 0:
+                self.anim_dir = 2
+            else:
+                self.anim_dir = 3
+            self.past_move = self.movement
+        else:
+            self.frame += 1
+
+        frame_coeff = 8 if self.grounded or self.movement == 0 else 6
+
+        self.index = (self.frame // frame_coeff) % 4 + (4 * self.anim_dir)
 
     def physics(self):
         if abs(self.velocity[0]) < 0.1:
@@ -68,6 +100,6 @@ class Entity(Weak_Object):
             if self.velocity[1] > 0:
                 self.rect.top = each.rect.bottom
                 self.velocity[1] = 0
-        
+
         self.x = unc(self.rect.x)
         self.y = unc(self.rect.y)

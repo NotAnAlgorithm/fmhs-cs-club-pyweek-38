@@ -1,9 +1,18 @@
 from .. import *
 
+
 # Weak objects are immutable, physics-less objects.
 # They *can* be collided with.
 class Weak_Object(Sprite):
-    def __init__(self, x: int = 0, y: int = 0, w:int = 0, h:int = 0, *, create_surface:bool = True):
+    def __init__(
+        self,
+        x: int = 0,
+        y: int = 0,
+        w: int = 0,
+        h: int = 0,
+        *,
+        create_surface: bool = True
+    ):
         super().__init__()
 
         # internals
@@ -15,10 +24,10 @@ class Weak_Object(Sprite):
 
     def update(self):
         super().update()
-    
+
     def physics(self):
-        pass # to be overridden
-    
+        pass  # to be overridden
+
     def check_collide(self):
         for each in self.parent.children:
             if each.guid == self.guid:

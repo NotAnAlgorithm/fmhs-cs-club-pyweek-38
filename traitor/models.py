@@ -57,7 +57,7 @@ class Sprite(Scene):
 
     @property
     def rect(self):
-        return self.rects[self.index]
+        return self.rects[0]  # no dynamic hitboxes just yet
 
     @property
     def sprite(self):

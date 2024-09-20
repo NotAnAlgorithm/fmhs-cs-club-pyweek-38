@@ -1,5 +1,6 @@
 from .. import *
 
+
 class Player(Entity):
     def __init__(self, sprite: str = "traitor/assets/entities/agent/", *args):
         super().__init__(sprite, *args)
