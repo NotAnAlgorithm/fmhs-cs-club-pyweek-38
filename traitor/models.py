@@ -9,12 +9,16 @@ class Scene:
         self.guid = uuid4()
         self.parent = None
         self.children = []
-        self.ret_val = -1  # Used for communicating to game logic thread
+        self._ret_val = -1  # Used for communicating to game logic thread
 
     def add_child(self, child):
         assert isinstance(child, Scene)
         child.parent = self
         self.children.append(child)
+
+    def rm_child(self, index: int):
+        self.children[index].parent = None
+        self.children.pop(index)
 
     def handle_input(self, input: pygame.event):
         pass  # To be overriden!!
@@ -24,8 +28,37 @@ class Scene:
         These are animation updates, not physics updates!
         Please avoid doing a lot of math on these because
         they *will* lag the game!
+        ...Famous last words!
         """
         pass  # To be overriden!!!
+
+    def on_display(self):
+        """
+        Start music, etc.
+        Top-down loading, I believe?
+        """
+        for child in self.children:
+            child.on_display()
+        pass  # To be overriden!!!
+
+    def repeat_display(self):
+        """
+        Not as useful!
+        """
+        for child in self.children:
+            child.repeat_display()
+        pass  # To be overriden!!!
+
+    # Return value decorator
+    @property
+    def ret_val(self):
+        return self._ret_val
+
+    @ret_val.setter
+    def ret_val(self, val: int):
+        if self.parent is not None:
+            self.parent.ret_val = val
+        self._ret_val = val
 
 
 class Sprite(Scene):

@@ -60,18 +60,18 @@ class Entity(Weak_Object):
         # Player movement...
         if self.movement > 0:
             ax += self.move_speed
-            # double turn around speed
+            # triple turn around speed
             if self.velocity[0] < 0:
-                ax += self.move_speed
+                ax += self.move_speed * 3
         elif self.movement < 0:
             ax -= self.move_speed
             if self.velocity[0] > 0:
-                ax -= self.move_speed
+                ax -= self.move_speed * 3
         else:
             if self.velocity[0] > 0:
-                ax -= self.move_speed
+                ax -= self.move_speed * 2
             elif self.velocity[0] < 0:
-                ax += self.move_speed
+                ax += self.move_speed * 2
 
         self.velocity[0] += ax
         self.velocity[1] += ay

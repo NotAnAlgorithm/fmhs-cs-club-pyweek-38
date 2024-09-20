@@ -144,3 +144,13 @@ def title_next(event):
 
 
 title_screen.handle_input = title_next
+
+
+def on_display():
+    pygame.mixer.Channel(0).play(pygame.mixer.Sound("traitor/assets/sounds/rain.wav"))
+    pygame.mixer.music.load("traitor/assets/sounds/opening_theme.wav")
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
+
+
+title_screen.on_display = on_display

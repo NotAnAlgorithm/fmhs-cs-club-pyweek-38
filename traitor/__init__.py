@@ -6,6 +6,7 @@ from pygame.locals import *
 
 fps_timer = pygame.time.Clock()
 pygame.init()
+pygame.mixer.init()
 
 scale = 50  # 120 is 1920x1080
 WINDOW_SIZE = (16 * scale, 9 * scale)

@@ -33,9 +33,18 @@ def main():
             try:  # Grab updated scene from logic thread
                 scene = q.get()
                 if isinstance(scene, Scene):
+                    if current_scene is not None:
+                        before = current_scene.guid
+                    else:
+                        before = None
                     current_scene = scene
-            except:
-                pass
+                    after = current_scene.guid
+                    if before != after:
+                        current_scene.on_display()
+                    else:
+                        current_scene.repeat_display()
+            except Exception as e:
+                print(e)
 
         if current_scene is not None:
             # Render

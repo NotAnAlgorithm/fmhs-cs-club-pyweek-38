@@ -26,9 +26,12 @@ class Textbox(Sprite):  # not really a sprite, but I need things to recognize it
             self.text[i : i + self.limit] for i in range(0, len(self.text), self.limit)
         ]
 
-        self.outer_box = pygame.Surface((WINDOW_SIZE[0], WINDOW_SIZE[1] / 3)), (
+        self.outer_box = pygame.Surface((WINDOW_SIZE[0], WINDOW_SIZE[1] / 3))
+        self.outer_box = self.outer_box, pygame.Rect(
             0,
             WINDOW_SIZE[1] / 3 * 2,
+            self.outer_box.get_width(),
+            self.outer_box.get_height(),
         )
         self.outer_box[0].set_alpha(224)  # or 192
         self.outer_box[0].fill((0, 0, 0))
@@ -75,3 +78,17 @@ class Textbox(Sprite):  # not really a sprite, but I need things to recognize it
         screen.blit(*self.text_line_1)
         if self.text_line_2:
             screen.blit(*self.text_line_2)
+
+    def handle_input(self, event):
+        super().handle_input(event)
+        pos = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            # Check if player clicked on the new game box
+            if self.outer_box[1].collidepoint(pos):
+                set_cursor(0)
+                self.ret_val = 0
+        if event.type == pygame.MOUSEMOTION:
+            if self.outer_box[1].collidepoint(pos):
+                set_cursor(1)
+            else:
+                set_cursor(0)

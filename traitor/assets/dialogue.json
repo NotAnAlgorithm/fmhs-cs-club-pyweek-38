@@ -14,6 +14,16 @@
             "name": "Traitor",
             "icon": "traitor.png",
             "text": "Through the power of not actually checking the length of the text, you can only have 160 characters per textbox, 80 per line!"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(I've infiltrated the belligerent foreign nation Dalmyr's capital city, Frostheim, without any suspicion.)"
+        },
+        {
+            "name": "Traitor",
+            "icon": "traitor.png",
+            "text": "(.)"
         }
     ]
 }
