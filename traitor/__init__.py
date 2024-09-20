@@ -19,7 +19,9 @@ update_event = threading.Event()
 from .util import *
 from .models import *
 from .scripts.textbox import Textbox
-from .scripts.player import Player, Entity
+from .scripts.weak_object import Weak_Object
+from .scripts.entity import Entity
+from .scripts.player import Player
 from .scripts.title import title_screen
 from .scripts.game_world import World
 from .scripts.game_logic import game_logic
