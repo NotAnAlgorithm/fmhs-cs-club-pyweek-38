@@ -45,10 +45,14 @@ class World(Scene):
 class Outside(World):
     def __init__(self):
         self.road_height = 20
+        self.rain_sfx = pygame.mixer.Sound("traitor/assets/sounds/rain.wav")
+        self.rain_sfx.set_volume(0.5)
         super().__init__()
 
     def on_display(self):
         super().on_display()
+
+        self.rain_sfx.play(-1)
 
     def update(self):
         super().update()
@@ -80,7 +84,7 @@ class Outside(World):
         self.road.resize(0, c(self.road_height))
         self.road.sprite.fill((64, 64, 64), special_flags=pygame.BLEND_RGB_SUB)
         self.road.y = unc(WINDOW_SIZE[1]) - self.road_height
-        for i in range(10):
+        for i in range(100):
             road = Weak_Object(collide=True)
             road.sprite_sheet = self.road.sprite_sheet
             road.rects.append(self.road.sprite.get_rect())
@@ -89,3 +93,49 @@ class Outside(World):
             self.add_child(road)
 
         self.children.append(self.children.pop(0))  # Move player in front
+
+        self.crate = Weak_Object(collide=False)
+        self.crate.fill_sprites("traitor/assets/crate/")
+        self.crate.resize(0, c(60))
+        self.crate.sprite.fill((32, 32, 32), special_flags=pygame.BLEND_RGB_SUB)
+        self.crate.x = 200
+        self.crate.y = unc(WINDOW_SIZE[1]) - unc(self.crate.rect.h) - self.road_height
+        self.add_child(self.crate)
+
+        self.security = Weak_Object(collide=False)
+        self.security.fill_sprites("traitor/assets/camera/")
+        self.security.resize(0, c(80))
+        self.security.sprite.fill((32, 32, 32), special_flags=pygame.BLEND_RGB_SUB)
+        self.security.x = 0
+        self.security.y = center(unc(WINDOW_SIZE[1]), unc(self.security.rect.h))
+        self.add_child(self.security)
+
+        rain = Sprite()
+        rain.fill_sprites("traitor/assets/rain/")
+        for i in range(len(rain.sprite_sheet)):
+            rain.resize(i, WINDOW_SIZE[1] / 4)
+            rain.sprite_sheet[i].fill(
+                (255, 255, 255, 128), special_flags=pygame.BLEND_RGBA_MULT
+            )
+
+        def rain_upd():
+            rain.frame += 1
+            if rain.frame == 3:
+                rain.index += 1
+                rain.frame = 0
+            if rain.index == len(rain.sprite_sheet):
+                rain.index = 0
+
+        def rain_render():
+            rain.rect.x = -self.camera_x
+            for i in range(7):
+                rain.rect.y = 0
+                for i in range(4):
+                    Sprite.render(rain)
+                    rain.rect.y += rain.rect.h
+                rain.rect.x += rain.rect.w
+
+        rain.frame = 0
+        rain.update = rain_upd
+        rain.render = rain_render
+        self.add_child(rain)

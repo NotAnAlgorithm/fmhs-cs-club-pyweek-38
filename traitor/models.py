@@ -117,6 +117,9 @@ class Sprite(Scene):
         screen.blit(self.sprite, coords)
         # WARNING: STILL RENDERS OFF-SCREEN OBJECTS
 
+    def physics(self):
+        pass
+
     def fill_sprites(self, directory):
         for file in sorted(os.listdir(directory)):
             if not (file.endswith(".png") or file.endswith(".jpg")):

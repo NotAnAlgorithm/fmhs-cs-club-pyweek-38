@@ -111,6 +111,13 @@ new_game_box.rect.x = center(WINDOW_SIZE[0], new_game_box.rect.w)
 new_game_box.rect.y = center(WINDOW_SIZE[1], new_game_box.rect.h, (2, 3))
 title_screen.add_child(new_game_box)
 
+credits_box = Sprite()
+credits_box.fill_sprites("traitor/assets/credits_button/")
+credits_box.resize(0, c(40))
+credits_box.rect.x = center(WINDOW_SIZE[0], credits_box.rect.w)
+credits_box.rect.y = center(WINDOW_SIZE[1], credits_box.rect.h, (2, 3)) + c(50)
+title_screen.add_child(credits_box)
+
 title_logo = Sprite()
 title_logo.sprite_sheet.append(pix_font_xl.render("TRAITOR", True, (255, 153, 0)))
 title_logo.rects.append(None)
@@ -136,8 +143,10 @@ def title_next(event):
         if new_game_box.rect.collidepoint(pos):
             set_cursor(0)
             title_screen.ret_val = 0
+        if credits_box.rect.collidepoint(pos):
+            title_screen.ret_val = 1
     if event.type == pygame.MOUSEMOTION:
-        if new_game_box.rect.collidepoint(pos):
+        if new_game_box.rect.collidepoint(pos) or credits_box.rect.collidepoint(pos):
             set_cursor(1)
         else:
             set_cursor(0)

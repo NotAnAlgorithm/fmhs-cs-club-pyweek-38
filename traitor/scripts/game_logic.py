@@ -42,6 +42,10 @@ def title_logic():
             wait_return()
             # unknown...
             os._exit(0)
+        case 1:
+            internal_scene = credits_scene
+            wait_return()
+            title_logic()
         case _:
             raise os._exit(1)
 
@@ -49,6 +53,7 @@ def title_logic():
 def beginning_cutscene():
     global internal_scene
 
+    internal_scene.rm_child(-1)
     internal_scene.rm_child(-1)
     internal_scene.rm_child(-1)
     internal_scene.rm_child(-1)
