@@ -17,12 +17,15 @@ class Player(Entity):
                     self.velocity[1] = self.termv
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
+        if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and not (keys[pygame.K_RIGHT] or keys[pygame.K_d]):
             self.movement = -1
-        elif keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
+        elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and not (keys[pygame.K_LEFT] or keys[pygame.K_a]):
             self.movement = 1
         else:
             self.movement = 0
 
     def update(self):
         super().update()
+
+    def physics(self):
+        super().physics()

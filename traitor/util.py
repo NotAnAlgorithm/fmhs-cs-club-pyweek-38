@@ -24,9 +24,15 @@ def center(
     return outer // position[1] * position[0] - inner // 2
 
 
-def resize(image, scale):
-    return pygame.transform.scale(
-        image, (image.get_width() / image.get_height() * scale, scale)
+def resize(image, scale, h: bool = True):
+    return (
+        pygame.transform.scale(
+            image, (image.get_width() / image.get_height() * scale, scale)
+        )
+        if h
+        else pygame.transform.scale(
+            image, (scale, image.get_height() / image.get_width() * scale)
+        )
     )
 
 

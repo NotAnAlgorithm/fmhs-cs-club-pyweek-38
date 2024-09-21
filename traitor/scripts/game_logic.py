@@ -87,3 +87,11 @@ def playable_world():
     while ret_val != 0:
         internal_scene = Outside()
         ret_val = wait_return()
+
+        match ret_val:
+            case 3:  # inner base
+                pygame.mixer.music.load("traitor/assets/sounds/espionage.ogg")
+                pygame.mixer.music.set_volume(1)
+                pygame.mixer.music.play(-1)
+            case _:
+                print("who knows")

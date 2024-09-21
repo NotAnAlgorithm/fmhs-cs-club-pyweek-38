@@ -13,6 +13,9 @@ class Scene:
         # -1 - nothing
         # 0 - standard next
         # 1 - end textbox
+        self.camera = [0, 0]  # An offset for rendering objects
+        self.camera_frame = 0
+        self.camera_delay = 1  # Delay for camera movement in frames
 
     def add_child(self, child):
         assert isinstance(child, Scene)
@@ -22,6 +25,15 @@ class Scene:
     def rm_child(self, index: int):
         self.children[index].parent = None
         self.children.pop(index)
+
+    def update_camera(self, x, y, loop_up=True):
+        self.camera = [x, y]
+        if loop_up:
+            if self.parent is not None:
+                self.parent.update_camera(x, y, loop_up=True)
+                return
+        for child in self.children:
+            child.update_camera(x, y, loop_up=False)
 
     def handle_input(self, input: pygame.event):
         pass  # To be overriden!!
@@ -71,6 +83,25 @@ class Scene:
             self.parent.ret_val = val
         self._ret_val = val
 
+    # Camera decorators
+    @property
+    def camera_x(self):
+        return self.camera[0]
+
+    @camera_x.setter
+    def camera_x(self, val: int):
+        self.camera[0] = val
+        self.update_camera(*self.camera)
+
+    @property
+    def camera_y(self):
+        return self.camera[1]
+
+    @camera_y.setter
+    def camera_y(self, val: int):
+        self.camera[1] = val
+        self.update_camera(*self.camera)
+
 
 class Sprite(Scene):
     def __init__(self):
@@ -79,8 +110,12 @@ class Sprite(Scene):
         self.sprite_sheet = []
         self.index = 0
 
-    def render(self):
-        screen.blit(self.sprite, self.rect)  # To be overriden!!!
+    def render(self):  # To be overriden!!!
+        coords = [self.rect.x, self.rect.y]
+        coords[0] += self.camera[0]
+        coords[1] += self.camera[1]
+        screen.blit(self.sprite, coords)
+        # WARNING: STILL RENDERS OFF-SCREEN OBJECTS
 
     def fill_sprites(self, directory):
         for file in sorted(os.listdir(directory)):
@@ -91,8 +126,8 @@ class Sprite(Scene):
             )
             self.rects.append(self.sprite_sheet[-1].get_rect())
 
-    def resize(self, index, scale):
-        self.sprite_sheet[index] = resize(self.sprite_sheet[index], scale)
+    def resize(self, index, scale, h: bool = True):
+        self.sprite_sheet[index] = resize(self.sprite_sheet[index], scale, h=h)
         self.rects[index] = self.sprite_sheet[index].get_rect()
 
     def resize_all(self, scale):
